@@ -1,0 +1,24 @@
+    <!-- SEARCH.HTML -->
+    <div>
+        <h2 align="center"> {{ results.word | title }} </h2>
+        <br>
+        <p>
+            <b>Meaning: </b>{{results.meaning}}
+        </p>
+        <br>
+        <p>
+        <b>Synonyms: </b>
+    
+        {% for s in main_synonym_list %}
+        <a href="/word?word={{s}}">{{s}}</a>,
+        {% endfor %}
+    </p>
+    <br>
+    <p>
+        <b>Antonyms: </b>
+         {% for a in main_antonym_list %}
+            <a href="/word?word={{a}}">{{a}}</a>,
+        {% endfor %}
+    </p>
+    </div>
+    

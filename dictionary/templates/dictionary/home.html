@@ -1,0 +1,95 @@
+<!-- Extend from base template -->
+{% extends 'dictionary/base.html' %}
+
+{% block content %}
+    <!-- Search form -->
+    <form action="" method="GET">
+        <div class="input-group mb-3">
+            <input type="text" name="word" class="form-control" placeholder="Search a word..." required>
+            <div class="input-group-append">
+                <button class="btn btn-success" type="submit">Search</button>&nbsp;<button class="btn btn-default reset" type="button" style="background-color: rgb(99, 99, 99); color: rgb(247, 247, 247);" onclick="redirectToHome()">Reset</button>
+            </div>
+        </div>
+    </form>
+    <script>
+        function redirectToHome() {
+            window.location.href = "/";  // Change "/" to your home view URL if it's different
+        }
+    </script>
+     <!-- Check if there is an error -->
+     {% if results.error %}
+        <div class="alert alert-danger" role="alert">
+            {{ results.error }}
+        </div>
+    {% endif %}
+
+    <!-- Check if there are any results to display -->
+    {% if results.word %}
+        <div class="row">
+            <div class="col-sm-6">
+                <h4>Word: {{ results.h1_texts.0 }}</h4>
+            </div>
+            <div class="col-sm-6 text-right">
+                {% if results.pronunciation_texts %}
+                    <p>Pronunciation: {{ results.pronunciation_texts.0 }}</p>
+                {% endif %}
+            </div>
+        </div>
+        <br>
+        <!-- Meanings -->
+        {% if results.meanings %}
+            <h4>Definitions:</h4>
+            <ol>
+                {% for meaning in results.meanings %}
+                    <li style="text-transform: capitalize;">{{ meaning }}</li>
+                {% endfor %}
+            </ol>
+        {% endif %}
+        <br>    
+        <!-- Synonyms Box -->
+        <h4>Synonyms:</h4>
+        <div class="card mt-4">
+            <div class="card-body">
+                {% if results.strongest_synonyms %}
+                    <h5 class="text-center">Strongest matches</h5>
+                    <div class="d-flex flex-wrap justify-content-center">
+                        {% for synonym in results.strongest_synonyms %}
+                            <div class="card m-1" style="width: auto; ">
+                                <div class="card-body text-center">
+                                    <p class="card-text" style="text-transform: capitalize;">{{ synonym }}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% if results.strong_synonyms %}
+                    <h5 class="text-center">Strong matches</h5>
+                    <div class="d-flex flex-wrap justify-content-center">
+                        {% for synonym in results.strong_synonyms %}
+                            <div class="card m-1" style="width: auto; ">
+                                <div class="card-body text-center">
+                                    <p class="card-text" style="text-transform: capitalize;">{{ synonym }}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% if results.weak_synonyms %}
+                    <h5 class="text-center">Weak matches</h5>
+                    <div class="d-flex flex-wrap justify-content-center">
+                        {% for synonym in results.weak_synonyms %}
+                            <div class="card m-1" style="width: auto; ">
+                                <div class="card-body text-center">
+                                    <p class="card-text" style="text-transform: capitalize;">{{ synonym }}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+    
+{% endblock %}
