@@ -82,15 +82,7 @@ def HomeView(request):
         check_set = set(strong_synonyms + weak_synonyms)
         strongest_synonyms = [item for item in strongest_synonyms if item not in check_set]
 
-        # results = {
-        #     'word': word,
-        #     'meanings': li_texts,
-        #     'h1_texts': h1_texts,
-        #     'pronunciation_texts': pronunciation_texts,
-        #     'strongest_synonyms': strongest_synonyms,
-        #     'strong_synonyms': strong_synonyms,
-        #     'weak_synonyms': weak_synonyms,
-        # }
+        
         # If no h1_texts, meanings, or synonyms found, return an error
         if not h1_texts and not li_texts and not (strongest_synonyms or strong_synonyms or weak_synonyms):
             results = {
